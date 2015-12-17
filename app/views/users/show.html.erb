@@ -1,0 +1,31 @@
+<h1>Welcome to BookFace</h1>
+
+<%if @user %>
+<h1><%=@user.first_name%> <%=@user.last_name%></h1>
+<form action='/sessions/logout' name='logout'>
+	<input type='hidden' name='authenticity_token' value='<%= form_authenticity_token%>'>
+	<button>Log Out</button>
+</form>
+<a href='/edit/<%=@user.id%>'>Edit Profile</a>
+<% end %> 
+<form action='/message/<%=@user.id%>'>
+	<input type='hidden' name='authenticity_token' value='<%= form_authenticity_token%>'>
+	<input type='text' name='content'>
+<button  type='submit'>Post Message</button>
+</form>
+<% @message.each do |i| %>
+<h1><%=i.message%></h1>
+	
+	<% comments = User.find(@user.id).messages.find(i.id).comments %>
+	<% comments.each do |i| %>
+	<p><%=i.comment%></p>
+	
+	<%end%>
+	<form action='/comment/<%=@user.id%>/<%=i.id%>'>
+		<input type='hidden' name='authenticity_token' value='<%= form_authenticity_token%>'>
+		<input type='text' name='comment'>
+		<button  type='submit'>Post Comment</button>
+	</form>
+
+<%end%>
+<a href='/message'> Show All Message</a>

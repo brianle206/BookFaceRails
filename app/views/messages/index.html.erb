@@ -1,0 +1,14 @@
+<h1>Messages#index</h1>
+<p>Find me in app/views/messages/index.html.erb</p>
+<% @message.each do |i| %>
+<h1><%=i.message%></h1>
+
+	
+	
+	<form action='/comment/<%=@user.id%>/<%=i.id%>'>
+		<input type='hidden' name='authenticity_token' value='<%= form_authenticity_token%>'>
+		<input type='text' name='comment'>
+		<button  type='submit'>Post Comment</button>
+	</form>
+
+<%end%>
